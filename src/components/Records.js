@@ -20,6 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const Title = styled(Typography)(({ theme }) => ({
   ...theme.typography.body2,
   fontWeight: 700,
+  textAlign: "center",
 }));
 
 export default function Records() {
