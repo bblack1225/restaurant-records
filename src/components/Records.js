@@ -39,7 +39,7 @@ export default function Records() {
         <Item key={elevation}>{`elevation=${elevation}`}</Item>
       ))} */}
       <Item>
-        <Title component="legend">盈咖哩飯專門</Title>
+        <Title component="p">盈咖哩飯專門</Title>
         <Rating
           name="read-only"
           value={4.5}
@@ -49,11 +49,11 @@ export default function Records() {
         />
       </Item>
       <Item>
-        <Title component="legend">豆花鄉</Title>
+        <Title component="p">豆花鄉</Title>
         <Rating name="read-only" value={4} readOnly size="small" />
       </Item>
       <Item>
-        <Title component="legend">和美冰果室</Title>
+        <Title component="p">和美冰果室</Title>
         <Rating name="read-only" value={5} readOnly size="small" />
       </Item>
     </Box>
