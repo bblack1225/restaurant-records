@@ -27,6 +27,11 @@ function App() {
     data: {},
   });
 
+  const [restaurantOptions, setRestaurantOptions] = useState({
+    name: [],
+    type: [],
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       const docDef = collection(db, "restaurant-records");
@@ -42,7 +47,15 @@ function App() {
     fetchData();
   }, []);
 
-  const handleDialogOpen = () => setIsDialogOpen(true);
+  const handleDialogOpen = () => {
+    const restaurantNames = records.data.map((record) => record.name);
+    const restaurantTypes = records.data.map((record) => record.type);
+    setRestaurantOptions({
+      name: restaurantNames,
+      type: restaurantTypes,
+    });
+    setIsDialogOpen(true);
+  };
   const handleDialogClose = () => setIsDialogOpen(false);
 
   const handleSaveRecord = async (data) => {
@@ -112,6 +125,7 @@ function App() {
             onClose={handleDialogClose}
             open={isDialogOpen}
             onSave={handleSaveRecord}
+            options={restaurantOptions}
           />
         </>
       )}

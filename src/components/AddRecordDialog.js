@@ -76,7 +76,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 }));
 
 export default function AddRecordDialog(props) {
-  const { open, onClose, onSave } = props;
+  const { open, onClose, onSave, options } = props;
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [address, setAddress] = useState("");
@@ -130,7 +130,7 @@ export default function AddRecordDialog(props) {
             onInputChange={handleNameInputChange}
             id="combo-box-demo"
             value={name}
-            options={mockRestaurants}
+            options={options.name}
             renderInput={(params) => <TextField {...params} label="餐廳名稱" />}
           />
           <Box sx={{ m: 3 }} />
@@ -140,7 +140,7 @@ export default function AddRecordDialog(props) {
             onInputChange={handleTypeInputChange}
             id="combo-box-demo"
             value={type}
-            options={mockRestaurantTypes}
+            options={options.type}
             renderInput={(params) => <TextField {...params} label="餐廳種類" />}
           />
           <Box sx={{ m: 3 }} />

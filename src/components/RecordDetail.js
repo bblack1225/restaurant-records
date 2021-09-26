@@ -40,6 +40,7 @@ export default function RecordDetail(props) {
             <Rating
               name="read-only"
               value={getScoreValue(currentRecord.ratingFromTing)}
+              precision={0.1}
               readOnly
             />
           </Box>
