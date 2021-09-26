@@ -22,7 +22,10 @@ function App() {
     data: [],
     isFetching: true,
   });
-  const [currentRecord, setCurrentRecord] = useState({});
+  const [currentRecord, setCurrentRecord] = useState({
+    isVisible: false,
+    data: {},
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,8 +62,11 @@ function App() {
   };
 
   const handleRecordClick = (name) => {
-    const current = records.find((record) => record.name === "name");
-    setCurrentRecord(current);
+    const current = records.data.find((record) => record.name === name);
+    setCurrentRecord({
+      isVisible: true,
+      data: current,
+    });
   };
 
   return (
@@ -89,8 +95,8 @@ function App() {
               recordData={records.data}
               onRecordClick={handleRecordClick}
             />
-            {currentRecord?.name && (
-              <RecordDetail currentRecord={currentRecord} />
+            {currentRecord.isVisible && (
+              <RecordDetail currentRecord={currentRecord.data} />
             )}
           </Box>
           <Box sx={{ m: 2, display: "flex" }}>
