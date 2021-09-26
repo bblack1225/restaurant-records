@@ -23,7 +23,11 @@ const Title = styled(Typography)(({ theme }) => ({
   textAlign: "center",
 }));
 
-export default function Records() {
+export default function Records(props) {
+  const { recordData, onRecordClick } = props;
+  const getAverageScore = (scoreOne, scoreTwo) => {
+    return ((scoreOne + scoreTwo) / 200) * 5;
+  };
   return (
     <Box
       component="div"
@@ -35,27 +39,23 @@ export default function Records() {
         textAlign: "center",
       }}
     >
-      {/* {[0, 1, 2, 3, 4, 6, 8, 12, 16, 24].map((elevation) => (
-        <Item key={elevation}>{`elevation=${elevation}`}</Item>
-      ))} */}
-      <Item>
-        <Title component="p">盈咖哩飯專門</Title>
-        <Rating
-          name="read-only"
-          value={4.5}
-          readOnly
-          precision={0.5}
-          size="small"
-        />
-      </Item>
-      <Item>
-        <Title component="p">豆花鄉</Title>
-        <Rating name="read-only" value={4} readOnly size="small" />
-      </Item>
-      <Item>
-        <Title component="p">和美冰果室</Title>
-        <Rating name="read-only" value={5} readOnly size="small" />
-      </Item>
+      {recordData.map((record, index) => {
+        return (
+          <Item key={index} onClick={() => onRecordClick(record.name)}>
+            <Title component="p">{record.name}</Title>
+            <Rating
+              name="read-only"
+              value={getAverageScore(
+                record.ratingFromTing,
+                record.ratingFromYu
+              )}
+              readOnly
+              precision={0.1}
+              size="small"
+            />
+          </Item>
+        );
+      })}
     </Box>
   );
 }

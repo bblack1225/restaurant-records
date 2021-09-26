@@ -7,7 +7,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 
-export default function RecordDetail() {
+export default function RecordDetail(props) {
+  const { currentRecord } = props;
+  console.log("currentRecord", currentRecord);
+  const getScoreValue = (score) => {
+    return (score / 100) * 5;
+  };
   return (
     <Box
       component="div"
@@ -20,10 +25,10 @@ export default function RecordDetail() {
       <Card>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            盈咖哩飯專門
+            {currentRecord.name}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            10690台北市大安區市民大道四段138-3號
+            {currentRecord.address}
           </Typography>
           <Box
             sx={{
@@ -33,7 +38,11 @@ export default function RecordDetail() {
             }}
           >
             <Box>昱:</Box>
-            <Rating name="read-only" value={4.5} readOnly />
+            <Rating
+              name="read-only"
+              value={getScoreValue(currentRecord.ratingFromTing)}
+              readOnly
+            />
           </Box>
           <Box
             sx={{
@@ -43,7 +52,12 @@ export default function RecordDetail() {
             }}
           >
             <Box>俞:</Box>
-            <Rating name="read-only" value={4.5} readOnly />
+            <Rating
+              name="read-only"
+              value={getScoreValue(currentRecord.ratingFromYu)}
+              precision={0.1}
+              readOnly
+            />
           </Box>
         </CardContent>
         <CardActions>

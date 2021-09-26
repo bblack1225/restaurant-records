@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -13,12 +11,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Slider, { SliderThumb } from "@mui/material/Slider";
+import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import Autocomplete from "@mui/material/Autocomplete";
-import Tooltip from "@mui/material/Tooltip";
 
 const mockRestaurants = ["和美冰果室", "蘿蔔蹲", "盈咖哩"];
+const mockRestaurantTypes = ["小吃", "牛排", "義大利麵", "火鍋"];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -77,31 +75,24 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
   },
 }));
 
-function ValueLabelComponent(props) {
-  const { children, value } = props;
-
-  return (
-    <Tooltip enterTouchDelay={0} placement="top" title={value}>
-      {children}
-    </Tooltip>
-  );
-}
-
 export default function AddRecordDialog(props) {
   const { open, onClose, onSave } = props;
   const [name, setName] = useState("");
+  const [type, setType] = useState("");
   const [address, setAddress] = useState("");
-  const [ratingFromTing, setRatingFromTing] = useState(0);
-  const [ratingFromYu, setRatingFromYu] = useState(0);
-  const checkData = () => {
-    console.log("ratingFromYu", ratingFromYu);
-    console.log("ratingFromTing", ratingFromTing);
-    console.log("name", name);
-    console.log("address", address);
+  const [ratingFromTing, setRatingFromTing] = useState(60);
+  const [ratingFromYu, setRatingFromYu] = useState(60);
+
+  const handleSaveClick = () => {
+    onSave({ name, type, address, ratingFromTing, ratingFromYu });
   };
-  const handleChange = (e) => {
-    console.log("e", e.target.value);
-  };
+  const handleNameChange = (event, newValue) => setName(newValue);
+
+  const handleNameInputChange = (e) => setName(e.target.value);
+
+  const handleTypeChange = (event, newValue) => setType(newValue);
+
+  const handleTypeInputChange = (e) => setType(e.target.value);
   return (
     <div>
       <Dialog
@@ -115,7 +106,7 @@ export default function AddRecordDialog(props) {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={() => onSave}
+              onClick={onClose}
               aria-label="close"
             >
               <CloseIcon />
@@ -123,7 +114,7 @@ export default function AddRecordDialog(props) {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               新增餐廳紀錄
             </Typography>
-            <Button autoFocus color="inherit" onClick={checkData}>
+            <Button autoFocus color="inherit" onClick={handleSaveClick}>
               儲存
             </Button>
           </Toolbar>
@@ -135,10 +126,22 @@ export default function AddRecordDialog(props) {
           <Box sx={{ m: 3 }} />
           <Autocomplete
             freeSolo
+            onChange={handleNameChange}
+            onInputChange={handleNameInputChange}
             id="combo-box-demo"
             value={name}
             options={mockRestaurants}
             renderInput={(params) => <TextField {...params} label="餐廳名稱" />}
+          />
+          <Box sx={{ m: 3 }} />
+          <Autocomplete
+            freeSolo
+            onChange={handleTypeChange}
+            onInputChange={handleTypeInputChange}
+            id="combo-box-demo"
+            value={type}
+            options={mockRestaurantTypes}
+            renderInput={(params) => <TextField {...params} label="餐廳種類" />}
           />
           <Box sx={{ m: 3 }} />
           <TextField
