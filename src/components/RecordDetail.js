@@ -9,7 +9,6 @@ import Rating from "@mui/material/Rating";
 
 export default function RecordDetail(props) {
   const { currentRecord } = props;
-  console.log("currentRecord", currentRecord);
   const getScoreValue = (score) => {
     return (score / 100) * 5;
   };
