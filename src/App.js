@@ -15,6 +15,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import AddRecordDialog from "./components/AddRecordDialog";
+import TypeSelect from "./components/TypeSelect";
 
 function App() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -32,28 +33,33 @@ function App() {
     type: [],
   });
 
+  const [selectType, setSelectType] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       const docDef = collection(db, "restaurant-records");
       const snap = await getDocs(docDef);
       snap.forEach((doc) => {
+        const data = doc.data();
         setRecords((prev) => ({
-          isFetching: false,
-          data: [...prev.data, doc.data()],
+          ...prev,
+          data: [...prev.data, data],
+        }));
+        setRestaurantOptions((prev) => ({
+          name: [...prev.name, data.name],
+          type: [...new Set(prev.type), data.type],
         }));
       });
+      setRecords((prev) => ({
+        ...prev,
+        isFetching: false,
+      }));
     };
 
     fetchData();
   }, []);
 
   const handleDialogOpen = () => {
-    const restaurantNames = records.data.map((record) => record.name);
-    const restaurantTypes = records.data.map((record) => record.type);
-    setRestaurantOptions({
-      name: restaurantNames,
-      type: restaurantTypes,
-    });
     setIsDialogOpen(true);
   };
   const handleDialogClose = () => setIsDialogOpen(false);
@@ -82,6 +88,8 @@ function App() {
     });
   };
 
+  const handleTypeSelect = (typeName) => {};
+
   return (
     <Box>
       {records.isFetching ? (
@@ -97,6 +105,19 @@ function App() {
         </Box>
       ) : (
         <>
+          {/* <Box
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "space-between", md: "center" },
+              padding: 2,
+            }}
+          >
+            <TypeSelect
+              types={restaurantOptions.type}
+              onSelect={handleTypeSelect}
+              selectType={selectType}
+            />
+          </Box> */}
           <Box
             component="div"
             sx={{

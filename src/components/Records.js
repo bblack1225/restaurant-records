@@ -4,7 +4,11 @@ import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import moment from "moment";
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   textAlign: "center",
@@ -28,6 +32,7 @@ export default function Records(props) {
   const getAverageScore = (scoreOne, scoreTwo) => {
     return ((scoreOne + scoreTwo) / 200) * 5;
   };
+  console.log("recordData", moment(recordData[0].createdTime).date());
   return (
     <Box
       component="div"

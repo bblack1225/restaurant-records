@@ -14,6 +14,7 @@ import { styled } from "@mui/material/styles";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import Autocomplete from "@mui/material/Autocomplete";
+import moment from "moment";
 
 const mockRestaurants = ["和美冰果室", "蘿蔔蹲", "盈咖哩"];
 const mockRestaurantTypes = ["小吃", "牛排", "義大利麵", "火鍋"];
@@ -84,7 +85,14 @@ export default function AddRecordDialog(props) {
   const [ratingFromYu, setRatingFromYu] = useState(60);
 
   const handleSaveClick = () => {
-    onSave({ name, type, address, ratingFromTing, ratingFromYu });
+    onSave({
+      name,
+      type,
+      address,
+      ratingFromTing,
+      ratingFromYu,
+      createdTime: moment().format(),
+    });
   };
   const handleNameChange = (event, newValue) => setName(newValue);
 
